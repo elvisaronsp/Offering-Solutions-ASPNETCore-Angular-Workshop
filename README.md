@@ -1,1 +1,1 @@
-# Repository for the ASP.NET Core / Angular 2 Workshop
+# Repository for the ASP.NET Core / Angular Workshop
