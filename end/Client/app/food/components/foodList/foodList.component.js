@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,40 +7,50 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+import { Sorter } from './../../../shared/services/sort.service';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 var FoodListComponent = (function () {
-    function FoodListComponent() {
+    function FoodListComponent(sorter) {
         var _this = this;
-        this.foodSelected = new core_1.EventEmitter();
-        this.foodDeleted = new core_1.EventEmitter();
+        this.sorter = sorter;
+        this.foodSelected = new EventEmitter();
+        this.foodDeleted = new EventEmitter();
         this.setFoodItemForEdit = function (foodItem) {
             _this.foodSelected.emit(foodItem);
         };
         this.deleteFood = function (foodItem) {
             _this.foodDeleted.emit(foodItem);
         };
+        this.setFoodToDelete = function (foodItem) {
+            _this.foodToDelete = foodItem;
+        };
     }
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Array)
-    ], FoodListComponent.prototype, "foods", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], FoodListComponent.prototype, "foodSelected", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], FoodListComponent.prototype, "foodDeleted", void 0);
-    FoodListComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'foodlist',
-            templateUrl: './foodList.component.html'
-        }), 
-        __metadata('design:paramtypes', [])
-    ], FoodListComponent);
+    FoodListComponent.prototype.sortArray = function (key, $event) {
+        if ($event) {
+            $event.preventDefault();
+        }
+        this.sorter.sort(key, this.foods);
+    };
     return FoodListComponent;
 }());
-exports.FoodListComponent = FoodListComponent;
+__decorate([
+    Input(),
+    __metadata("design:type", Array)
+], FoodListComponent.prototype, "foods", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", Object)
+], FoodListComponent.prototype, "foodSelected", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", Object)
+], FoodListComponent.prototype, "foodDeleted", void 0);
+FoodListComponent = __decorate([
+    Component({
+        selector: 'foodlist',
+        templateUrl: './foodList.component.html'
+    }),
+    __metadata("design:paramtypes", [Sorter])
+], FoodListComponent);
+export { FoodListComponent };
 //# sourceMappingURL=foodList.component.js.map
