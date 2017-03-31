@@ -7,3 +7,5 @@ end/Server/.vs
 end/Server/src/FoodAPICore/bin/
 end/Server/src/FoodAPICore/obj
 start/Client/node_modules/
+start/Client/.dist
+start/Client/src/.aot/
