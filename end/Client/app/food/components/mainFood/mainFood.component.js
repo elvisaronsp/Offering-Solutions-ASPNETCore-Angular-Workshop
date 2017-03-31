@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var food_dataservice_1 = require('./../../../shared/services/food.dataservice');
-var foodItem_1 = require('./../../../shared/models/foodItem');
-var core_1 = require('@angular/core');
+import { FoodDataService } from './../../../shared/services/food-data.service';
+import { FoodItem } from './../../../shared/models/foodItem.model';
+import { Component } from '@angular/core';
 var MainFoodComponent = (function () {
     function MainFoodComponent(_foodDataService) {
         var _this = this;
@@ -28,7 +27,7 @@ var MainFoodComponent = (function () {
             _this._foodDataService
                 .UpdateFood(foodItem.id, foodItem)
                 .subscribe(function (response) {
-                console.log('updated food');
+                _this.resetCurrentlySelectedFoodItem();
                 _this.getFood();
             }, function (error) { return console.log(error); });
         };
@@ -57,17 +56,16 @@ var MainFoodComponent = (function () {
         }, function (error) { return console.log(error); });
     };
     MainFoodComponent.prototype.resetCurrentlySelectedFoodItem = function () {
-        this.setCurrentlySelectedFood(new foodItem_1.FoodItem());
+        this.setCurrentlySelectedFood(new FoodItem());
     };
-    MainFoodComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'mainFood-component',
-            templateUrl: './mainFood.component.html'
-        }), 
-        __metadata('design:paramtypes', [food_dataservice_1.FoodDataService])
-    ], MainFoodComponent);
     return MainFoodComponent;
 }());
-exports.MainFoodComponent = MainFoodComponent;
+MainFoodComponent = __decorate([
+    Component({
+        selector: 'mainFood-component',
+        templateUrl: './mainFood.component.html'
+    }),
+    __metadata("design:paramtypes", [FoodDataService])
+], MainFoodComponent);
+export { MainFoodComponent };
 //# sourceMappingURL=mainFood.component.js.map

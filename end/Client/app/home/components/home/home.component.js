@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,8 +7,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var food_dataservice_1 = require('./../../../shared/services/food.dataservice');
-var core_1 = require('@angular/core');
+import { FoodDataService } from './../../../shared/services/food-data.service';
+import { Component } from '@angular/core';
 var HomeComponent = (function () {
     function HomeComponent(_foodDataService) {
         var _this = this;
@@ -33,15 +32,14 @@ var HomeComponent = (function () {
     HomeComponent.prototype.ngOnInit = function () {
         this.getFood();
     };
-    HomeComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'home-component',
-            templateUrl: './home.component.html'
-        }), 
-        __metadata('design:paramtypes', [food_dataservice_1.FoodDataService])
-    ], HomeComponent);
     return HomeComponent;
 }());
-exports.HomeComponent = HomeComponent;
+HomeComponent = __decorate([
+    Component({
+        selector: 'home-component',
+        templateUrl: './home.component.html'
+    }),
+    __metadata("design:paramtypes", [FoodDataService])
+], HomeComponent);
+export { HomeComponent };
 //# sourceMappingURL=home.component.js.map

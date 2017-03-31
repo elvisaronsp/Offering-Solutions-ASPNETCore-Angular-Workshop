@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,24 +7,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var app_configuration_1 = require('./shared/configuration/app.configuration');
-var core_1 = require('@angular/core');
-var common_1 = require('@angular/common');
+import { Configuration } from './shared/configuration/app.configuration';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 var AppComponent = (function () {
     function AppComponent(_configuration, _location) {
         this._configuration = _configuration;
         this._location = _location;
         this.title = _configuration.title;
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'foodChooser-app',
-            templateUrl: './app.component.html'
-        }), 
-        __metadata('design:paramtypes', [app_configuration_1.Configuration, common_1.Location])
-    ], AppComponent);
     return AppComponent;
 }());
-exports.AppComponent = AppComponent;
+AppComponent = __decorate([
+    Component({
+        selector: 'foodChooser-app',
+        templateUrl: 'app.component.html'
+    }),
+    __metadata("design:paramtypes", [Configuration, Location])
+], AppComponent);
+export { AppComponent };
 //# sourceMappingURL=app.component.js.map

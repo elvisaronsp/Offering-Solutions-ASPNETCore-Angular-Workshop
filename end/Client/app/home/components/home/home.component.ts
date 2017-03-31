@@ -1,9 +1,8 @@
-import { FoodDataService } from './../../../shared/services/food.dataservice';
-import { FoodItem } from './../../../shared/models/foodItem';
+import { FoodDataService } from './../../../shared/services/food-data.service';
+import { FoodItem } from './../../../shared/models/foodItem.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    moduleId: module.id,
     selector: 'home-component',
     templateUrl: './home.component.html'
 })

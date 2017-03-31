@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using AutoMapper;
-using FoodAPICore.Dtos;
 using FoodAPICore.Models;
-using FoodAPICore.Repositories;
+using FoodAPICore.Repositories.Food;
+using FoodAPICore.ViewModels;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,167 +14,117 @@ namespace FoodAPICore.Controller
     public class FoodController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly IFoodRepository _foodRepository;
-        private readonly ILogger<FoodController> _logger;
 
-        public FoodController(ILogger<FoodController> logger, IFoodRepository foodRepository)
+        public FoodController(IFoodRepository foodRepository)
         {
             _foodRepository = foodRepository;
-            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            try
-            {
-                return Ok(_foodRepository.GetAll().Select(x => Mapper.Map<FoodItemDto>(x)));
-            }
-            catch (Exception exception)
-            {
-                _logger.LogCritical("Error", exception);
-                return new StatusCodeResult(500);
-            }
+            return Ok(_foodRepository.GetAll().Select(x => Mapper.Map<FoodItemViewModel>(x)));
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] FoodItemDto foodItemDto)
+        public IActionResult Add([FromBody] FoodItemViewModel foodItemViewModel)
         {
-            try
+            if (foodItemViewModel == null)
             {
-                if (foodItemDto == null)
-                {
-                    return BadRequest();
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                FoodItem newFoodItem = _foodRepository.Add(Mapper.Map<FoodItem>(foodItemDto));
-
-                return CreatedAtRoute("GetSingleFood", new {id = newFoodItem.Id}, Mapper.Map<FoodItemDto>(newFoodItem));
+                return BadRequest();
             }
-            catch (Exception exception)
+
+            if (!ModelState.IsValid)
             {
-                _logger.LogCritical("Error", exception);
-                return new StatusCodeResult(500);
+                return BadRequest(ModelState);
             }
+
+            FoodItem newFoodItem = _foodRepository.Add(Mapper.Map<FoodItem>(foodItemViewModel));
+
+            return CreatedAtRoute("GetSingleFood", new { id = newFoodItem.Id }, Mapper.Map<FoodItemViewModel>(newFoodItem));
         }
 
         [HttpPatch("{id:int}")]
-        public IActionResult PartiallyUpdate(int id, [FromBody] JsonPatchDocument<FoodItemDto> patchDoc)
+        public IActionResult PartiallyUpdate(int id, [FromBody] JsonPatchDocument<FoodItemViewModel> patchDoc)
         {
-            try
+            if (patchDoc == null)
             {
-                if (patchDoc == null)
-                {
-                    return BadRequest();
-                }
-
-                FoodItem existingEntity = _foodRepository.GetSingle(id);
-
-                if (existingEntity == null)
-                {
-                    return NotFound();
-                }
-
-                FoodItemDto foodItemDto = Mapper.Map<FoodItemDto>(existingEntity);
-                patchDoc.ApplyTo(foodItemDto, ModelState);
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                FoodItem updated = _foodRepository.Update(id, Mapper.Map<FoodItem>(foodItemDto));
-
-                return Ok(Mapper.Map<FoodItemDto>(updated));
+                return BadRequest();
             }
-            catch (Exception exception)
+
+            FoodItem existingEntity = _foodRepository.GetSingle(id);
+
+            if (existingEntity == null)
             {
-                _logger.LogCritical("Error", exception);
-                return new StatusCodeResult(500);
+                return NotFound();
             }
+
+            FoodItemViewModel foodItemViewModel = Mapper.Map<FoodItemViewModel>(existingEntity);
+            patchDoc.ApplyTo(foodItemViewModel, ModelState);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            FoodItem updated = _foodRepository.Update(id, Mapper.Map<FoodItem>(foodItemViewModel));
+
+            return Ok(Mapper.Map<FoodItemViewModel>(updated));
         }
 
         [HttpGet]
         [Route("{id:int}", Name = "GetSingleFood")]
         public IActionResult Single(int id)
         {
-            try
-            {
-                FoodItem foodItem = _foodRepository.GetSingle(id);
+            FoodItem foodItem = _foodRepository.GetSingle(id);
 
-                if (foodItem == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(Mapper.Map<FoodItemDto>(foodItem));
-            }
-            catch (Exception exception)
+            if (foodItem == null)
             {
-                _logger.LogCritical("Error", exception);
-                return new StatusCodeResult(500);
+                return NotFound();
             }
+
+            return Ok(Mapper.Map<FoodItemViewModel>(foodItem));
         }
 
         [HttpDelete]
         [Route("{id:int}")]
         public IActionResult Remove(int id)
         {
-            try
-            {
-                FoodItem foodItem = _foodRepository.GetSingle(id);
+            FoodItem foodItem = _foodRepository.GetSingle(id);
 
-                if (foodItem == null)
-                {
-                    return NotFound();
-                }
-
-                _foodRepository.Delete(id);
-                return NoContent();
-            }
-            catch (Exception exception)
+            if (foodItem == null)
             {
-                _logger.LogCritical("Error", exception);
-                return new StatusCodeResult(500);
+                return NotFound();
             }
+
+            _foodRepository.Delete(id);
+            return NoContent();
         }
 
         [HttpPut]
         [Route("{id:int}")]
-        public IActionResult Update(int id, [FromBody]FoodItemDto foodItem)
+        public IActionResult Update(int id, [FromBody]FoodItemViewModel foodItem)
         {
-            try
+            var foodItemToCheck = _foodRepository.GetSingle(id);
+
+            if (foodItemToCheck == null)
             {
-                var foodItemToCheck = _foodRepository.GetSingle(id);
-
-                if (foodItemToCheck == null)
-                {
-                    return NotFound();
-                }
-
-                if (id != foodItem.Id)
-                {
-                    return BadRequest("Ids do not match");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                FoodItem update = _foodRepository.Update(id, Mapper.Map<FoodItem>(foodItem));
-
-                return Ok(Mapper.Map<FoodItemDto>(update));
+                return NotFound();
             }
-            catch (Exception exception)
+
+            if (id != foodItem.Id)
             {
-                _logger.LogCritical("Error", exception);
-                return new StatusCodeResult(500);
+                return BadRequest("Ids do not match");
             }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            FoodItem update = _foodRepository.Update(id, Mapper.Map<FoodItem>(foodItem));
+
+            return Ok(Mapper.Map<FoodItemViewModel>(update));
         }
     }
 }

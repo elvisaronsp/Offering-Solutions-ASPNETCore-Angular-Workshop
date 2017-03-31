@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,21 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var app_configuration_1 = require('./../../configuration/app.configuration');
-var core_1 = require('@angular/core');
+import { Configuration } from './../../configuration/app.configuration';
+import { Component } from '@angular/core';
 var NavigationComponent = (function () {
     function NavigationComponent(_configuration) {
         this._configuration = _configuration;
     }
-    NavigationComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'navigation',
-            templateUrl: './navigation.component.html'
-        }), 
-        __metadata('design:paramtypes', [app_configuration_1.Configuration])
-    ], NavigationComponent);
     return NavigationComponent;
 }());
-exports.NavigationComponent = NavigationComponent;
+NavigationComponent = __decorate([
+    Component({
+        selector: 'navigation',
+        templateUrl: 'navigation.component.html'
+    }),
+    __metadata("design:paramtypes", [Configuration])
+], NavigationComponent);
+export { NavigationComponent };
 //# sourceMappingURL=navigation.component.js.map

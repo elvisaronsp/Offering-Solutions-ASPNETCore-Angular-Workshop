@@ -1,8 +1,11 @@
-"use strict";
-var foodDetails_component_1 = require('./components/foodDetails/foodDetails.component');
-var mainFood_component_1 = require('./components/mainFood/mainFood.component');
-exports.FoodRoutes = [
-    { path: 'food', component: mainFood_component_1.MainFoodComponent },
-    { path: 'food/:foodId', component: foodDetails_component_1.FoodDetailsComponent }
+import { FoodDetailsComponent } from './components/foodDetails/foodDetails.component';
+import { MainFoodComponent } from './components/mainFood/mainFood.component';
+export var FoodRoutes = [
+    {
+        path: '', component: MainFoodComponent
+    },
+    {
+        path: ':foodId', component: FoodDetailsComponent
+    }
 ];
 //# sourceMappingURL=food.routes.js.map

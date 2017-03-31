@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,15 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var foodItem_1 = require('./../../../shared/models/foodItem');
-var food_dataservice_1 = require('./../../../shared/services/food.dataservice');
-var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
+import { FoodItem } from './../../../shared/models/foodItem.model';
+import { FoodDataService } from './../../../shared/services/food-data.service';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 var FoodDetailsComponent = (function () {
     function FoodDetailsComponent(_route, _foodDataService) {
         this._route = _route;
         this._foodDataService = _foodDataService;
-        this.selectedFoodItem = new foodItem_1.FoodItem();
+        this.selectedFoodItem = new FoodItem();
     }
     FoodDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -29,15 +28,14 @@ var FoodDetailsComponent = (function () {
             }, function (error) { return console.log(error); });
         });
     };
-    FoodDetailsComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'foodDetails-component',
-            templateUrl: './foodDetails.component.html'
-        }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute, food_dataservice_1.FoodDataService])
-    ], FoodDetailsComponent);
     return FoodDetailsComponent;
 }());
-exports.FoodDetailsComponent = FoodDetailsComponent;
+FoodDetailsComponent = __decorate([
+    Component({
+        selector: 'foodDetails-component',
+        templateUrl: './foodDetails.component.html'
+    }),
+    __metadata("design:paramtypes", [ActivatedRoute, FoodDataService])
+], FoodDetailsComponent);
+export { FoodDetailsComponent };
 //# sourceMappingURL=foodDetails.component.js.map
