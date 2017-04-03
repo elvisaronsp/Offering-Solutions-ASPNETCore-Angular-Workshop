@@ -3,9 +3,9 @@ end/Client/node_modules/
 end/Client/typings/
 end/Client/npm-debug.*
 start/Server/.vs
-end/Server/.vs
-end/Server/src/FoodAPICore/bin/
-end/Server/src/FoodAPICore/obj
+end/Server-vs2017/.vs
+end/Server-vs2017/src/FoodAPICore/bin/
+end/Server-vs2017/src/FoodAPICore/obj
 start/Client/node_modules/
 start/Client/.dist
 start/Client/src/.aot/
