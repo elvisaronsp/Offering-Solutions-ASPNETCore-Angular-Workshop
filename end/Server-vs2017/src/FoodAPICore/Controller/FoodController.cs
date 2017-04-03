@@ -7,6 +7,8 @@ using FoodAPICore.ViewModels;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using FoodAPICore.Repositories;
+using System.Collections.Generic;
 
 namespace FoodAPICore.Controller
 {
@@ -23,7 +25,11 @@ namespace FoodAPICore.Controller
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_foodRepository.GetAll().Select(x => Mapper.Map<FoodItemViewModel>(x)));
+            ICollection<FoodItem> foodItems = _foodRepository.GetAll();
+            IEnumerable<FoodItemViewModel> viewModels = foodItems
+                .Select(x => Mapper.Map<FoodItemViewModel>(x));
+
+            return Ok(viewModels);
         }
 
         [HttpPost]
@@ -39,9 +45,11 @@ namespace FoodAPICore.Controller
                 return BadRequest(ModelState);
             }
 
-            FoodItem newFoodItem = _foodRepository.Add(Mapper.Map<FoodItem>(foodItemViewModel));
+            FoodItem newFoodItem = _foodRepository
+                .Add(Mapper.Map<FoodItem>(foodItemViewModel));
 
-            return CreatedAtRoute("GetSingleFood", new { id = newFoodItem.Id }, Mapper.Map<FoodItemViewModel>(newFoodItem));
+            return CreatedAtRoute("GetSingleFood", new { id = newFoodItem.Id }, 
+                Mapper.Map<FoodItemViewModel>(newFoodItem));
         }
 
         [HttpPatch("{id:int}")]

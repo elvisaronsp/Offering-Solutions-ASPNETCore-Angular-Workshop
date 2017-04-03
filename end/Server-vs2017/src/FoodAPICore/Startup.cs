@@ -1,15 +1,17 @@
 ﻿using FoodAPICore.Models;
 using FoodAPICore.Repositories.Food;
+using FoodAPICore.Repositories;
 using FoodAPICore.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Http;
+using FoodAPICore.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodAPICore
 {
@@ -46,8 +48,14 @@ namespace FoodAPICore
                     });
             });
 
-            services.AddSingleton<IFoodRepository, FoodRepository>();
-            services.AddMvcCore(setup=> {
+
+            var connectionString = Configuration["connectionStrings:DefaultConnection"];
+            services.AddDbContext<FoodDbContext>(options => options.UseSqlServer(connectionString));
+
+            //services.AddSingleton<IFoodRepository, FoodRepository>();
+            services.AddScoped<IFoodRepository, EfFoodRepository>();
+            services.AddMvcCore(setup =>
+            {
                 setup.ReturnHttpNotAcceptable = true;
             })
                 .AddJsonFormatters(options => options.ContractResolver = new CamelCasePropertyNamesContractResolver());

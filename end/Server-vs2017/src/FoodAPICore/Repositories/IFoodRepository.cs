@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FoodAPICore.Models;
 
-namespace FoodAPICore.Repositories.Food
+namespace FoodAPICore.Repositories
 {
     public interface IFoodRepository
     {
