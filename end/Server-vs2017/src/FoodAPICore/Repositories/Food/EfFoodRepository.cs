@@ -1,9 +1,7 @@
 ﻿using FoodAPICore.Entities;
 using FoodAPICore.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FoodAPICore.Repositories.Food
 {
@@ -21,18 +19,15 @@ namespace FoodAPICore.Repositories.Food
             return _foodDbContext.FoodItems.FirstOrDefault(x => x.Id == id);
         }
 
-        public FoodItem Add(FoodItem item)
+        public void Add(FoodItem item)
         {
             _foodDbContext.FoodItems.Add(item);
-            _foodDbContext.SaveChanges();
-            return GetSingle(item.Id);
         }
 
         public void Delete(int id)
         {
             FoodItem foodItem = GetSingle(id);
             _foodDbContext.FoodItems.Remove(foodItem);
-            _foodDbContext.SaveChanges();
         }
 
         public FoodItem Update(int id, FoodItem item)
@@ -44,8 +39,7 @@ namespace FoodAPICore.Repositories.Food
             existingFoodItem.Calories = item.Calories;
             existingFoodItem.Name = item.Name;
 
-            _foodDbContext.SaveChanges();
-            return GetSingle(id);
+            return existingFoodItem;
         }
 
         public ICollection<FoodItem> GetAll()
@@ -56,6 +50,11 @@ namespace FoodAPICore.Repositories.Food
         public int Count()
         {
             return _foodDbContext.FoodItems.Count();
+        }
+
+        public bool Save()
+        {
+            return (_foodDbContext.SaveChanges() >= 0);
         }
     }
 }

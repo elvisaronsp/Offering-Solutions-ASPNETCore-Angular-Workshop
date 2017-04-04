@@ -14,13 +14,14 @@
       "dom"
     ],
     "types": [
-      "node"
+      "node",
+      "jasmine"
     ]
   },
   "files": [
-    "app/app.module.ts",
-    "app/food/food.module.ts",
-    "app/main.ts"
+    "src/app/app.module.ts",
+    "src/app/food/food.module.ts",
+    "src/app/main.ts"
   ],
   "awesomeTypescriptLoaderOptions": {
     "useWebpackText": true

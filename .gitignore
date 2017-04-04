@@ -13,3 +13,5 @@ end/Server/src/FoodAPICore/obj
 start/Server/src/FoodAPICore/bin
 end/Server/src/FoodAPICore/bin
 start/Server/src/FoodAPICore/obj/
+end/Client/.dist
+end/Client/src/.aot/

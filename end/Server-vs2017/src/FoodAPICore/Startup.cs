@@ -52,8 +52,8 @@ namespace FoodAPICore
             var connectionString = Configuration["connectionStrings:DefaultConnection"];
             services.AddDbContext<FoodDbContext>(options => options.UseSqlServer(connectionString));
 
-            //services.AddSingleton<IFoodRepository, FoodRepository>();
-            services.AddScoped<IFoodRepository, EfFoodRepository>();
+            services.AddSingleton<IFoodRepository, FoodRepository>();
+            // services.AddScoped<IFoodRepository, EfFoodRepository>();
             services.AddMvcCore(setup =>
             {
                 setup.ReturnHttpNotAcceptable = true;
