@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 var Configuration = (function () {
     function Configuration() {
         this.baseUrl = 'http://foodapi4demo.azurewebsites.net/api/';
+        // baseUrl: string = "http://localhost:5000/api/";
         this.title = 'Angular FoodChooser';
     }
     return Configuration;

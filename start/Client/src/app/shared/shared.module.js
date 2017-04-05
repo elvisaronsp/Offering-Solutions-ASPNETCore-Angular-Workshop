@@ -15,6 +15,7 @@ var SharedModule = (function () {
 SharedModule = __decorate([
     NgModule({
         imports: [
+            // Modules
             CommonModule,
             RouterModule
         ],
